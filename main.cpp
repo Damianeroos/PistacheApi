@@ -7,7 +7,7 @@
 int main() {
 
 
-    Pistache::Address addr(Pistache::Ipv4::any(), Pistache::Port(9080));
+    Pistache::Address addr("localhost", Pistache::Port(1234));
     auto opts = Pistache::Http::Endpoint::options()
         .threads(1);
 
