@@ -1,11 +1,13 @@
-#include "pistache/endpoint.h"
+#pragma once
 
-using namespace Pistache;
+#include <pistache/endpoint.h>
 
-class HelloHandler : public Http::Handler {
+
+
+class HelloHandler : public Pistache::Http::Handler {
 public:
 
     HTTP_PROTOTYPE(HelloHandler)
 
-    void onRequest(const Http::Request& request, Http::ResponseWriter response) override;
+    void onRequest(const Pistache::Http::Request& request, Pistache::Http::ResponseWriter response) override;
 };
