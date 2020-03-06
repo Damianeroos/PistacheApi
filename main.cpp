@@ -30,13 +30,8 @@ int main() {
   int status = sigwait(&signals, &signal);
   if (status == 0)
     {
-      std::cout << "received signal " << signal << std::endl;
+      std::cout << "Shuting down server " << signal << std::endl;
+      server.shutdown();
     }
-  else
-    {
-      std::cerr << "sigwait returns " << status << std::endl;
-    }
-
-  server.shutdown();
 
 }
