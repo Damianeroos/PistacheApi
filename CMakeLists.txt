@@ -10,4 +10,6 @@ pkg_search_module(PISTACHE REQUIRED libpistache>=0.0.2)
 
 include_directories(${PISTACHE_INCLUDE_DIRS})
 add_executable(${PROJECT_NAME} main.cpp)
-target_link_libraries(${PROJECT_NAME}  PUBLIC hellohandler ${PISTACHE_LIBRARIES})
+#target_link_libraries(${PROJECT_NAME}  PUBLIC hellohandler pistache)
+#target_link_libraries(${PROJECT_NAME}  PUBLIC hellohandler ${PISTACHE_LIBRARIES})
+target_link_libraries(${PROJECT_NAME}  PUBLIC hellohandler pistache pthread)
