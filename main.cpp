@@ -28,7 +28,7 @@ int main() {
 
   int signal = 0;
   int status = sigwait(&signals, &signal);
-  if (status == 0)
+  if (status == 2)
     {
       std::cout << "Shuting down server " << signal << std::endl;
       server.shutdown();
