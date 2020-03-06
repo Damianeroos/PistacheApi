@@ -4,15 +4,39 @@
    Example of an hello world server
 */
 #include "HelloHandler.hpp"
+#include <signal.h>
+
 int main() {
+  sigset_t signals;
+  if (sigemptyset(&signals) != 0
+      || sigaddset(&signals, SIGTERM) != 0
+      || sigaddset(&signals, SIGINT) != 0
+      || sigaddset(&signals, SIGHUP) != 0
+      || pthread_sigmask(SIG_BLOCK, &signals, nullptr) != 0) {
+    perror("install signal handler failed");
+    return 1;
+  }
 
+  Pistache::Address addr("localhost", Pistache::Port(9080));
+  auto opts = Pistache::Http::Endpoint::options()
+    .threads(1);
 
-    Pistache::Address addr("localhost", Pistache::Port(1234));
-    auto opts = Pistache::Http::Endpoint::options()
-        .threads(1);
+  Pistache::Http::Endpoint server(addr);
+  server.init(opts);
+  server.setHandler(Pistache::Http::make_handler<HelloHandler>());
+  server.serveThreaded();
 
-    Http::Endpoint server(addr);
-    server.init(opts);
-    server.setHandler(Http::make_handler<HelloHandler>());
-    server.serve();
+  int signal = 0;
+  int status = sigwait(&signals, &signal);
+  if (status == 0)
+    {
+      std::cout << "received signal " << signal << std::endl;
+    }
+  else
+    {
+      std::cerr << "sigwait returns " << status << std::endl;
+    }
+
+  server.shutdown();
+
 }

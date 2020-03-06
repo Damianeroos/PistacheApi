@@ -10,7 +10,7 @@ void HelloHandler::onRequest(const Http::Request& request,
      request.resource() == "/welcome"){      
     response.send(Pistache::Http::Code::Ok, "Hello World!\n");
   
-}
+  }
   else{
     response.send(Pistache::Http::Code::Bad_Request);
   }
