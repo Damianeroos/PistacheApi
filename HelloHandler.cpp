@@ -5,15 +5,29 @@ using namespace Pistache;
 void HelloHandler::onRequest(const Http::Request& request,
 			     Http::ResponseWriter response){
   std::string resource;
-  std::string welcome = "/welcome/";
+  std::string welcome_addr = "/welcome/";
   std::string message;
+
   //GET method
   if(request.method() == Http::Method::Get){
     resource = request.resource();
-    if(resource == "/welcome"){      
+    if(resource == "/welcome"){
+      if(request.query().as_str().empty()){ // welcome addr but no parameters
       response.send(Pistache::Http::Code::Ok, "Hello World!\n");
+      }
+      else{ //wlecome addr and parameters
+	message ="Hello";
+	for(auto it = request.query().parameters_begin();
+	    it != request.query().parameters_end(); ++it){
+	  if(it->first == "name" || it->first == "surname")
+	    message += " " + it->second;
+	}
+	message += "!\n";
+	
+	response.send(Pistache::Http::Code::Ok, message);
+      }
     }
-    else if(!welcome.compare(0,std::string::npos,resource,0,9)){
+    else if(!welcome_addr.compare(0,std::string::npos,resource,0,9)){
       response.send(Pistache::Http::Code::Ok, "Hello " + resource.substr(9) + "!\n");
     }
     else{
