@@ -18,12 +18,12 @@ void shutdown_server(int no){
 
 int main() {
   
-  signal(SIGABRT,SIG_IGN);
-  signal(SIGFPE,SIG_IGN);
-  signal(SIGILL,SIG_IGN);
-  signal(SIGSEGV,SIG_IGN);
-  signal(SIGTERM,SIG_IGN);
-  signal(SIGINT,shutdown_server);
+  std::signal(SIGABRT,SIG_IGN);
+  std::signal(SIGFPE,SIG_IGN);
+  std::signal(SIGILL,SIG_IGN);
+  std::signal(SIGSEGV,SIG_IGN);
+  std::signal(SIGTERM,SIG_IGN);
+  std::signal(SIGINT,shutdown_server);
 
 
   Pistache::Address addr("localhost", Pistache::Port(1234));
@@ -35,12 +35,6 @@ int main() {
   server_p = &server;
   server.init(opts);
   server.setHandler(Pistache::Http::make_handler<HelloHandler>());
-  server.serveThreaded();
-  std::cout<<"\nServer starts"<<std::endl;
-
-   while(1) {
-      sleep(1);
-   }
-
+  server.serve();
 
 }
