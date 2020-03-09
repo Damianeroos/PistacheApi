@@ -38,7 +38,5 @@ void HelloHandler::onRequest(const Http::Request& request,
     response.send(Pistache::Http::Code::Bad_Request);
   }
 }
-//cos co wyświetli zmienna wysłana w formie adresu ...:9080/welcome/XXX ---> Hello XXX!
-/// cos co wyświetli .../welcome?name=Damian&surname=Rakowski ---> Hello Damian Rakowski!
-//jak wywołac shotdown nie znajac adrresu funckjii
-//podmienic readme
+
+
