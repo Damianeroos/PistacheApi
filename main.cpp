@@ -9,13 +9,11 @@
 
   Pistache::Http::Endpoint *endpoint_p;
 
-
-void shutdown_server(int no){
+void shutdown_handler(int no){
   endpoint_p->shutdown();
   std::cout << "\nShuting down server"<< std::endl;
   exit(no);
 }
-
 int main() {
   
   std::signal(SIGABRT,SIG_IGN);
@@ -23,8 +21,8 @@ int main() {
   std::signal(SIGILL,SIG_IGN);
   std::signal(SIGSEGV,SIG_IGN);
   std::signal(SIGTERM,SIG_IGN);
-  std::signal(SIGINT,shutdown_server);
-
+  std::signal(SIGINT,shutdown_handler);
+  
   Pistache::Address addr("localhost", Pistache::Port(1234));
   auto router = std::make_shared<Pistache::Rest::Router>();    
   auto opts = Pistache::Http::Endpoint::options().threads(1); 
