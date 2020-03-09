@@ -9,9 +9,8 @@
  Pistache::Http::Endpoint *server_p;
 
 void shutdown_server(int no){
+  std::cout << "Shuting down server "  << std::endl;
   server_p->shutdown();
-  std::cout << "\nShuting down server"<< std::endl;
-  exit(no);
 }
 
 int main() {
@@ -24,8 +23,10 @@ int main() {
   signal(SIGINT,shutdown_server);
 
 
+
+
   Pistache::Address addr("localhost", Pistache::Port(1234));
-  auto opts = Pistache::Http::Endpoint::options()
+  auto opts = Pistache::Http::Endpoint::options)(
     .threads(1);
 
   Pistache::Http::Endpoint server(addr);
@@ -34,9 +35,9 @@ int main() {
   server.init(opts);
   server.setHandler(Pistache::Http::make_handler<HelloHandler>());
   server.serveThreaded();
-  std::cout<<"\nServer starts"<<std::endl;
 
    while(1) {
+     std::cout << "Going to sleep...." << std::endl;
       sleep(1);
    }
 

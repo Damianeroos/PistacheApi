@@ -7,15 +7,15 @@ void HelloHandler::onRequest(const Http::Request& request,
   std::string resource;
   std::string welcome_addr = "/welcome/";
   std::string message;
-	response.send(Pistache::Http::Code::Ok,"dupa");
-  /*  //GET method
+
+  //GET method
   if(request.method() == Http::Method::Get){
     resource = request.resource();
     if(resource == "/welcome"){
-      if(request.query().as_str().empty()){ // welcome addr but no parameters
-      response.send(Pistache::Http::Code::Ok, "Hello World!\n");
+      if(request.query().as_str().empty()){ // only welcome addr but no parameters
+	response.send(Pistache::Http::Code::Ok, "Hello World!\n");
       }
-      else{ //wlecome addr and parameters
+      else{ //only wlecome addr and parameters
 	message ="Hello";
 	for(auto it = request.query().parameters_begin();
 	    it != request.query().parameters_end(); ++it){
@@ -27,7 +27,7 @@ void HelloHandler::onRequest(const Http::Request& request,
 	response.send(Pistache::Http::Code::Ok, message);
       }
     }
-    else if(!welcome_addr.compare(0,std::string::npos,resource,0,9)){
+    else if(!welcome_addr.compare(0,std::string::npos,resource,0,9)){//welcome addr and more
       response.send(Pistache::Http::Code::Ok, "Hello " + resource.substr(9) + "!\n");
     }
     else{
@@ -37,8 +37,6 @@ void HelloHandler::onRequest(const Http::Request& request,
   else{
     response.send(Pistache::Http::Code::Bad_Request);
   }
-  
-  */
 }
 //cos co wyświetli zmienna wysłana w formie adresu ...:9080/welcome/XXX ---> Hello XXX!
 /// cos co wyświetli .../welcome?name=Damian&surname=Rakowski ---> Hello Damian Rakowski!
