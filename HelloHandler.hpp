@@ -10,6 +10,8 @@ public:
 
   void publish(std::shared_ptr<Pistache::Rest::Router> router); 
 private:
-  void printHelloWorld(Pistache::Http::Request const&,Pistache::Http::ResponseWriter response);
+  void printHelloWorld(Pistache::Rest::Request const&,Pistache::Http::ResponseWriter response);
+  void printHelloName(Pistache::Rest::Request const&,Pistache::Http::ResponseWriter response);
+  void printHelloAddr(Pistache::Rest::Request const&,Pistache::Http::ResponseWriter response);
 };
 
