@@ -27,7 +27,7 @@ int main() {
 
   Pistache::Address addr("localhost", Pistache::Port(1234));
   auto router = std::make_shared<Pistache::Rest::Router>();    
-  auto opts = Pistache::Http::Endpoint::options().threads(1); //tutaj moze byc bug
+  auto opts = Pistache::Http::Endpoint::options().threads(1); 
  
   Pistache::Http::Endpoint endpoint(addr);
   endpoint_p = &endpoint;
