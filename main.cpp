@@ -4,34 +4,39 @@
    Example of an hello world server
 */
 #include "HelloHandler.hpp"
-#include <signal.h>
+#include <csignal>
+
+ Pistache::Http::Endpoint *server_p;
+
+void shutdown_server(int no){
+  std::cout << "Shuting down server "  << std::endl;
+  server_p->shutdown();
+}
 
 int main() {
-  sigset_t signals;
-  if (sigemptyset(&signals) != 0
-      || sigaddset(&signals, SIGTERM) != 0
-      || sigaddset(&signals, SIGINT) != 0
-      || sigaddset(&signals, SIGHUP) != 0
-      || pthread_sigmask(SIG_BLOCK, &signals, nullptr) != 0) {
-    perror("install signal handler failed");
-    return 1;
-  }
+  
+  signal(SIGABRT,SIG_IGN);
+  signal(SIGFPE,SIG_IGN);
+  signal(SIGILL,SIG_IGN);
+  signal(SIGSEGV,SIG_IGN);
+  signal(SIGTERM,SIG_IGN);
+  signal(SIGINT,shutdown_server);
 
-  Pistache::Address addr("localhost", Pistache::Port(9080));
+
+
+
+  Pistache::Address addr("localhost", Pistache::Port(1234));
   auto opts = Pistache::Http::Endpoint::options()
     .threads(1);
 
   Pistache::Http::Endpoint server(addr);
+
+  server_p = &server;
   server.init(opts);
   server.setHandler(Pistache::Http::make_handler<HelloHandler>());
   server.serveThreaded();
 
-  int signal = 0;
-  int status = sigwait(&signals, &signal);
-  if (status == 2)
-    {
-      std::cout << "Shuting down server " << signal << std::endl;
-      server.shutdown();
-    }
+  std::cout<<"pragram sienie blokuje"<<std::endl;
+
 
 }
