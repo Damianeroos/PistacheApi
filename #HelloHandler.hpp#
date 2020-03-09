@@ -11,5 +11,6 @@ public:
   void publish(std::shared_ptr<Pistache::Rest::Router> router); 
 private:
   void printHelloWorld(Pistache::Http::Request const&,Pistache::Http::ResponseWriter response);
+  void printHelloName(Pistache::Http::Request const&,Pistache::Http::ResponseWriter response);
 };
 

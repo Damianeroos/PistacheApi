@@ -7,11 +7,11 @@
 #include <csignal>
 
 
-  Pistache::Http::Endpoint *server_p;
+  Pistache::Http::Endpoint *endpoint_p;
 
 
 void shutdown_server(int no){
-  server_p->shutdown();
+  endpoint_p->shutdown();
   std::cout << "\nShuting down server"<< std::endl;
   exit(no);
 }
@@ -25,16 +25,17 @@ int main() {
   std::signal(SIGTERM,SIG_IGN);
   std::signal(SIGINT,shutdown_server);
 
-
   Pistache::Address addr("localhost", Pistache::Port(1234));
-  auto opts = Pistache::Http::Endpoint::options()
-    .threads(1);
+  auto router = std::make_shared<Pistache::Rest::Router>();    
+  auto opts = Pistache::Http::Endpoint::options().threads(1); //tutaj moze byc bug
+ 
+  Pistache::Http::Endpoint endpoint(addr);
+  endpoint_p = &endpoint;
+  endpoint.init(opts);
 
-  Pistache::Http::Endpoint server(addr);
-
-  server_p = &server;
-  server.init(opts);
-  server.setHandler(Pistache::Http::make_handler<HelloHandler>());
-  server.serve();
+  auto hello_handler = HelloHandler();
+  hello_handler.publish(router);
+  endpoint.setHandler(router->handler());
+  endpoint.serve();
 
 }

@@ -13,3 +13,7 @@ void HelloHandler::publish(std::shared_ptr<Pistache::Rest::Router> router){
 void HelloHandler::printHelloWorld(Pistache::Http::Request const&,Pistache::Http::ResponseWriter response){
   response.send(Pistache::Http::Code::Ok, "Hello World!\n");
 }
+
+void HelloHandler::printHelloName(Pistache::Http::Request const&,Pistache::Http::ResponseWriter response){
+  
+}
