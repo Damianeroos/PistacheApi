@@ -30,13 +30,11 @@ void HelloHandler::onRequest(const Http::Request& request,
     else if(!welcome_addr.compare(0,std::string::npos,resource,0,9)){//welcome addr and more
       response.send(Pistache::Http::Code::Ok, "Hello " + resource.substr(9) + "!\n");
     }
-    else{
-      response.send(Pistache::Http::Code::Bad_Request);
-    }
   }
-  else{
-    response.send(Pistache::Http::Code::Bad_Request);
-  }
+  
+
+  response.send(Pistache::Http::Code::Bad_Request);
+  
 }
 
 

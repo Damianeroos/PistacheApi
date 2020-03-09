@@ -6,7 +6,9 @@
 #include "HelloHandler.hpp"
 #include <csignal>
 
- Pistache::Http::Endpoint *server_p;
+
+  Pistache::Http::Endpoint *server_p;
+
 
 void shutdown_server(int no){
   server_p->shutdown();
